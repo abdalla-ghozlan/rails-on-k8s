@@ -1,0 +1,54 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: instarails-deployment
+spec:
+  replicas: 1
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1  
+  selector:
+    matchLabels: 
+      app: instademo
+      tier: app
+  template:
+    metadata:
+      name: instarails
+      labels:
+        app: instademo
+        tier: app
+    spec:
+      containers:
+      - name: instarails
+        image: ghozlan/instarails:1.0.0
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: "appsecrets"
+              key: "DATABASE_URL"
+        - name: SECRET_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "appsecrets"
+              key: "SECRET_TOKEN"
+        - name: CACHE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "CACHE_URL"
+        - name: WORKER_PROCESSES
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "WORKER_PROCESSES"
+        - name: LISTEN_ON
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "LISTEN_ON"
+        ports:
+          - containerPort: 8000

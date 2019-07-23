@@ -1,0 +1,47 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: postgres-deployment
+  labels:
+    app: instademo
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: instademo
+      tier: database
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: instademo
+        tier: database
+    spec:
+      volumes:
+      - name: postgres-pv
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+      containers:
+      - name: postgres
+        image: postgres:9.4.5
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: "appsecrets"
+              key: "pguser"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: "appsecrets"
+              key: "pgpassword"
+        - name: PGDATA
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "pgdata"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: postgres-pv

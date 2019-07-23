@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migratedb
+spec:
+  template:
+    metadata:
+      name: migratedb
+    spec:
+      containers:
+      - name: migratedb
+        image: ghozlan/instarails
+        command: ["rake", "db:reset", "db:migrate"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: "appsecrets"
+              key: "DATABASE_URL"
+        - name: SECRET_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: "appsecrets"
+              key: "SECRET_TOKEN"
+        - name: CACHE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "CACHE_URL"
+        - name: WORKER_PROCESSES
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "WORKER_PROCESSES"
+        - name: LISTEN_ON
+          valueFrom:
+            configMapKeyRef:
+              name: "appconfigs"
+              key: "LISTEN_ON"
+      restartPolicy: Never

@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: appconfigs
+data:
+  WORKER_PROCESSES: "1"
+  LISTEN_ON: "0.0.0.0:8000"
+  CACHE_URL: "redis://redis:6379/0"
+  JOB_WORKER_URL: "redis://redis:6379/0"
+  pgdata: "/var/lib/postgresql/data"
+  RAILS_ENV: ""
+# RAILS_ENV: "production"

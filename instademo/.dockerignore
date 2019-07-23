@@ -1,0 +1,6 @@
+.git
+.dockerignore
+Gemfile.lock
+docker-compose.yml
+log/*
+tmp/*

@@ -1,0 +1,29 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: redis-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels: 
+      app: instademo
+      tier: cache
+  template:
+    metadata:
+      name: redis
+      labels:
+        app: instademo
+        tier: cache
+    spec:
+      volumes:
+      - name: redis-pv
+        persistentVolumeClaim:
+          claimName: redis-pvc
+      containers:
+      - name: redis
+        image: redis:3.0.5
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+        - mountPath: "/var/lib/redis/data"
+          name: redis-pv

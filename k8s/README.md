@@ -69,7 +69,7 @@ $ kubectl create -f deployment_sidekiq.yml --record;
 ```
 $ kubectl create -f service_instarails_nodeport.yml; 
 ```
-- Create a service to expose the postgres db on port 30009 (as configured  in the service) to the external network (for dev purposes)
+- Create a service to expose the postgres db on port 30009 (as configured  in the service) to the external network (for dev purposes use credentials from .instademo.env) 
 ```
 $ kubectl create -f service_postgres_nodeport.yml;
 ```

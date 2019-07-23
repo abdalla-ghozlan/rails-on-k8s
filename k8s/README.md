@@ -13,7 +13,7 @@ For demo purposes I'm using [minikube]([https://kubernetes.io/docs/setup/learnin
 
 ### Architecture Diagram
 
-![Server Setup Diagram](https://github.com/ghozln/rails-on-k8s/rails-on-k8s.jpg) This is a typical deployment strategy for rails on k8s thought I'm covering the Ingress part for now I'll update it later.
+![Server Setup Diagram](https://github.com/ghozln/rails-on-k8s/blob/master/rails-on-k8s.jpg) This is a typical deployment strategy for rails on k8s thought I'm not covering the Ingress part for now I'll update it later.
 
 ### Start now
 #### Find all kubectl commands for deploying the pre-configured yaml files in the k8s/imperative-cmds directory or follow me here.
